@@ -1,11 +1,12 @@
 import React from 'react';
+import Jumbotron from './js/components/Jumbotron';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
+    <main role="main">
+      <Jumbotron />
+    </main>
   );
-}
+};
 
 export default App;
