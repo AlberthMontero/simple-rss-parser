@@ -8,6 +8,7 @@ const App = () => {
   const [feed, setFeed] = useState({});
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleQuery = event => {
     setQuery(event.target.value);
@@ -28,13 +29,13 @@ const App = () => {
       .then(rssFeed => {
         setFeed(rssFeed);
         setLoading(false);
+        setErrorMsg('');
       })
       .catch(err => {
         setFeed({});
         setLoading(false);
-        console.error(
-          `Error fetching URL provided to the RssFeed component! ${err}`
-        );
+        setErrorMsg('Error fetching URL provided to the RssFeed component!');
+        console.error(err);
       });
   };
 
@@ -49,7 +50,7 @@ const App = () => {
         URL:
       </Search>
       <hr />
-      <RssFeed feed={feed} loading={loading} />
+      <RssFeed feed={feed} loading={loading} errorMsg={errorMsg} />
     </main>
   );
 };

@@ -3,7 +3,7 @@ import Pagination from './Pagination';
 import Spinners from './Spinners';
 import RssList from './RssList';
 
-const RssFeed = ({ feed, loading }) => {
+const RssFeed = ({ feed, loading, errorMsg }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
@@ -33,7 +33,11 @@ const RssFeed = ({ feed, loading }) => {
       </div>
     );
   } else {
-    return <div className="container">Nothing to show yet!! &#128560; </div>;
+    return (
+      <div className="container">
+        <span style={{ color: 'red' }}>{errorMsg}</span>
+      </div>
+    );
   }
 };
 
