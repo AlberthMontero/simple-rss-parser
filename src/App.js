@@ -4,35 +4,34 @@ import Jumbotron from './js/components/Jumbotron';
 import Search from './js/components/Search';
 import RSSParser from 'rss-parser';
 
-const App = props => {
+const App = () => {
+  const [feed, setFeed] = useState({});
   const [query, setQuery] = useState('');
-  const [feed, setFeed] = useState({
-    isLoaded: false,
-    started: false,
-    title: '',
-    items: []
-  });
+  const [loading, setLoading] = useState(false);
 
   const handleQuery = event => {
     setQuery(event.target.value);
   };
 
-  const handleSubmit = ({ target }) => {
+  const handleSubmit = () => {
     event.preventDefault();
-    setFeed({ ...feed, started: true });
 
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
     const RSS_URL = query.trim();
     let rssParser = new RSSParser();
 
+    setLoading(true);
+
     fetch(`${CORS_PROXY}${RSS_URL}`)
       .then(response => response.text())
       .then(str => rssParser.parseString(str))
       .then(rssFeed => {
-        setFeed({ ...rssFeed, isLoaded: true, started: true });
+        setFeed(rssFeed);
+        setLoading(false);
       })
       .catch(err => {
-        setFeed({ ...feed, started: false });
+        setFeed({});
+        setLoading(false);
         console.error(
           `Error fetching URL provided to the RssFeed component! ${err}`
         );
@@ -49,7 +48,8 @@ const App = props => {
       >
         URL:
       </Search>
-      <RssFeed feed={feed}></RssFeed>
+      <hr />
+      <RssFeed feed={feed} loading={loading} />
     </main>
   );
 };
