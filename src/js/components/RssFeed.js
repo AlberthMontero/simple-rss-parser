@@ -1,55 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Pagination from './Pagination';
+import Spinners from './Spinners';
+import RssList from './RssList';
 
-const RssFeed = ({ feed }) => {
-  if (feed.started && feed.isLoaded) {
+const RssFeed = ({ feed, loading }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  if (loading) {
+    return <Spinners />;
+  }
+
+  if (feed.items) {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = feed.items.slice(indexOfFirstItem, indexOfLastItem);
+
+    const changePage = pageNumber => setCurrentPage(pageNumber);
+
     return (
       <div className="container">
         <h3>
           Blog Posts | <small className="text-muted">{feed.title}</small>
         </h3>
         <hr />
-        {feed.items.map((item, i) => (
-          <div key={i}>
-            <h5>
-              <a href={item.link} target="_blank">
-                {item.title}
-              </a>
-            </h5>
-            <p>
-              <small>
-                published on: {new Date(item.pubDate).toLocaleString()}
-              </small>
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  } else if (feed.started && !feed.isLoaded) {
-    return (
-      <div className="container">
-        <div
-          className="spinner-grow spinner-grow-sm text-success"
-          role="status"
-        >
-          <span className="sr-only">Loading...</span>
-        </div>
-        <div className="spinner-grow spinner-grow-sm text-danger" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-        <div
-          className="spinner-grow spinner-grow-sm text-warning"
-          role="status"
-        >
-          <span className="sr-only">Loading...</span>
-        </div>
-        <div className="spinner-grow spinner-grow-sm text-info" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-        <span className="lead"> Loading... </span>
+        <RssList currentItems={currentItems} />
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={feed.items.length}
+          changePage={changePage}
+        />
       </div>
     );
   } else {
-    return <div className="container">nothing to show yet!! &#128516; </div>;
+    return <div className="container">Nothing to show yet!! &#128560; </div>;
   }
 };
 
