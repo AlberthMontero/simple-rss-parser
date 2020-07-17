@@ -1,5 +1,5 @@
 import React from 'react';
-import rss from '../../rss.svg';
+import rss from '../rss.svg';
 
 const Jumbotron = () => (
   <div className="jumbotron">

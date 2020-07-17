@@ -5,7 +5,7 @@ import RssList from './RssList';
 
 const RssFeed = ({ feed, loading, errorMsg }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const itemsPerPage = 10;
 
   if (loading) {
     return <Spinners />;
@@ -17,6 +17,8 @@ const RssFeed = ({ feed, loading, errorMsg }) => {
     const currentItems = feed.items.slice(indexOfFirstItem, indexOfLastItem);
 
     const changePage = pageNumber => setCurrentPage(pageNumber);
+
+    console.log(currentPage);
 
     return (
       <div className="container">

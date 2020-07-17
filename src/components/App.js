@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import RssFeed from './js/components/RssFeed';
-import Jumbotron from './js/components/Jumbotron';
-import Search from './js/components/Search';
-import RSSParser from 'rss-parser';
+import RssParser from 'rss-parser';
+import RssFeed from './RssFeed';
+import Jumbotron from './Jumbotron';
+import Search from './Search';
 
 const App = () => {
   const [feed, setFeed] = useState({});
@@ -18,24 +18,22 @@ const App = () => {
     event.preventDefault();
 
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-    const RSS_URL = query.trim();
-    let rssParser = new RSSParser();
+    const rssUrl = query.trim();
+    const rssParser = new RssParser();
 
     setLoading(true);
 
-    fetch(`${CORS_PROXY}${RSS_URL}`)
+    fetch(`${CORS_PROXY}${rssUrl}`)
       .then(response => response.text())
       .then(str => rssParser.parseString(str))
-      .then(rssFeed => {
-        setFeed(rssFeed);
-        setLoading(false);
-        setErrorMsg('');
-      })
+      .then(rssFeed => setFeed(rssFeed))
       .catch(err => {
         setFeed({});
-        setLoading(false);
         setErrorMsg('Error fetching URL provided to the RssFeed component!');
         console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 

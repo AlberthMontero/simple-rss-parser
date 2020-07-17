@@ -6,7 +6,7 @@ const Search = ({ query, children, handleQuery, handleSubmit }) => (
       <label>
         {children}
         <input
-          type="text"
+          type="search"
           name="search"
           value={query}
           onChange={handleQuery}
