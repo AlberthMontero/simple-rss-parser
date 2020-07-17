@@ -16,10 +16,6 @@ const RssFeed = ({ feed, loading, errorMsg }) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = feed.items.slice(indexOfFirstItem, indexOfLastItem);
 
-    const changePage = pageNumber => setCurrentPage(pageNumber);
-
-    console.log(currentPage);
-
     return (
       <div className="container">
         <h3>
@@ -30,7 +26,7 @@ const RssFeed = ({ feed, loading, errorMsg }) => {
         <Pagination
           itemsPerPage={itemsPerPage}
           totalItems={feed.items.length}
-          changePage={changePage}
+          changePage={setCurrentPage}
         />
       </div>
     );
