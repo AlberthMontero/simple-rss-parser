@@ -26,6 +26,7 @@ const RssFeed = ({ feed, loading, errorMsg }) => {
         <Pagination
           itemsPerPage={itemsPerPage}
           totalItems={feed.items.length}
+          currentPage={currentPage}
           changePage={setCurrentPage}
         />
       </div>
