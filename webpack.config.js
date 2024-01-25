@@ -1,9 +1,9 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: 'bundle.js'
+    filename: "bundle.js",
   },
   module: {
     rules: [
@@ -11,31 +11,39 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader'
-          }
-        ]
+            loader: "html-loader",
+          },
+        ],
       },
       {
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-url-loader'
-          }
-        ]
-      }
-    ]
+            loader: "svg-url-loader",
+          },
+        ],
+      },
+    ],
+  },
+  resolve: {
+    fallback: {
+      stream: require.resolve("stream-browserify"),
+      http: require.resolve("buffer/"),
+      https: require.resolve("https-browserify"),
+      timers: require.resolve("timers-browserify"),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
-    })
-  ]
+      template: "./src/index.html",
+      filename: "./index.html",
+    }),
+  ],
 };
