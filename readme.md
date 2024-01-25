@@ -1,5 +1,6 @@
 # Simple-RSS-Parser
 
+![simple-rss-parser](./public/simple-rss-parser.png)
 > A simple RSS Feed parser app made with ReactJs
 
 ## Usage
