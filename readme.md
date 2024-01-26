@@ -7,6 +7,8 @@
 
 allows users to input an RSS Feed URL into the input Form. The Form Submit Button fetches the provided RSS-feed, then parses it and displays a resulting list. The List just shows downloaded elements (in the simplest way) and includes pagination functionality.
 
+Note: You need to provide a CORS proxy to be able to load the RSS feed in the app.
+
 ## Install Dependencies
 
 ```
